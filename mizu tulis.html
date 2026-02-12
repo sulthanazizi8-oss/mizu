@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Kanji 水 Stroke Order</title>
+<style>
+body {
+    margin:0;
+    background:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+svg {
+    width:320px;
+    height:320px;
+}
+
+.stroke {
+    fill:none;
+    stroke:black;
+    stroke-width:10;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+
+.number {
+    font-size:22px;
+    font-family:Arial;
+    fill:black;
+    opacity:0;
+    pointer-events:none;
+}
+</style>
+</head>
+<body>
+
+<svg viewBox="0 0 200 200">
+
+<!-- 1 garis vertikal tengah dengan kait bawah -->
+<path id="s1" class="stroke" d="M100 25 L100 165 Q100 185 85 175" />
+<text id="n1" x="112" y="40" class="number">1</text>
+
+<!-- 2 garis kiri melengkung -->
+<path id="s2" class="stroke" d="M60 80 Q85 70 90 90 L65 120" />
+<text id="n2" x="40" y="75" class="number">2</text>
+
+<!-- 3 garis kanan atas miring -->
+<path id="s3" class="stroke" d="M105 90 L145 65" />
+<text id="n3" x="150" y="55" class="number">3</text>
+
+<!-- 4 garis kanan bawah melengkung -->
+<path id="s4" class="stroke" d="M110 95 Q145 120 160 150" />
+<text id="n4" x="120" y="130" class="number">4</text>
+
+</svg>
+
+<script>
+const strokes = [
+    {path: s1, num: n1},
+    {path: s2, num: n2},
+    {path: s3, num: n3},
+    {path: s4, num: n4}
+];
+
+function prepare() {
+    strokes.forEach(s => {
+        const len = s.path.getTotalLength();
+        s.path.style.strokeDasharray = len;
+        s.path.style.strokeDashoffset = len;
+        s.path.style.transition = "none";
+        s.num.style.opacity = 0;
+    });
+}
+
+function animate() {
+    strokes.forEach((s, i) => {
+        setTimeout(() => {
+            // angka muncul tepat saat garis mulai digambar
+            s.num.style.opacity = 1;
+
+            s.path.style.transition = "stroke-dashoffset 0.8s linear";
+            s.path.style.strokeDashoffset = 0;
+        }, i * 900);
+    });
+}
+
+function loop() {
+    prepare();
+    setTimeout(animate, 100);
+    setTimeout(loop, 4200);
+}
+
+loop();
+</script>
+
+</body>
+</html>
